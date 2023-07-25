@@ -32,18 +32,16 @@ load_dotenv()
 openai_api_key = os.environ.get('openai_api_key')
 
 # Transcribe audio with Whisper API
-audio_file_path = "path/to/your/audio/file"
-transcript_raw = openai.Audio.transcribe("whisper-1", file=audio_file_path)
-
+audio_file_path = "Recording.m4a"
+audio_file= open(audio_file_path, "rb")
+transcript_raw = openai.Audio.transcribe("whisper-1", file=audio_file)
+print(transcript_raw['text'])
 # Create LLM
 llm = ChatOpenAI(openai_api_key=openai_api_key, model_name="gpt-3.5-turbo", temperature=0.3)
 
-# Create prompt
-prompt_with_transcript = prompt.format(transcript=str(transcript_raw))
-
 # Create chain
-chain = LLMChain(llm=llm, prompt=prompt_with_transcript)
+chain = LLMChain(llm=llm, prompt=PromptTemplate.from_template(template))
 
 # Run chain
-summary = chain.run()
-
+summary = chain(transcript_raw['text'])
+print(summary)

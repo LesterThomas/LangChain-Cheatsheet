@@ -1,7 +1,7 @@
 from langchain.document_loaders.pdf import PyPDFLoader
 
 # Set the path to your PDF file
-pdf_file_path = "file/path/to/your/pdf/file"
+pdf_file_path = "TMF_ODAsoftwaremarket_v3.pdf"
 
 # Create a PDFLoader instance
 pdf_loader = PyPDFLoader(pdf_file_path)
